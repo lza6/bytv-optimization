@@ -1,0 +1,20 @@
+# DecoTV GUI Manager Dependencies
+# Python version requirement: 3.8+
+
+# PyQt6 - GUI framework
+PyQt6>=6.4.0
+
+# Cryptography for password encryption
+cryptography>=3.4.0
+
+# System monitoring
+psutil>=5.8.0
+
+# Async support
+aiohttp>=3.8.0
+
+# Scheduling for automated tasks
+schedule>=1.2.0
+
+# Note: Docker needs to be installed separately
+# Download: https://www.docker.com/products/docker-desktop
