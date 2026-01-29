@@ -1,357 +1,199 @@
-# DecoTV 一键部署 & 运维脚本（下载运行版）- V5 增强版
+# 📺 DecoTV Manager V5 - 现代化多实例部署与运维系统
 
-![License](https://img.shields.io/github/license/li210724/bytv)
-![Stars](https://img.shields.io/github/stars/li210724/bytv?style=flat)
-![Issues](https://img.shields.io/github/issues/li210724/bytv)
-![Last Commit](https://img.shields.io/github/last-commit/li210724/bytv)
-![Shell](https://img.shields.io/badge/script-bash-green)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg) ![Python](https://img.shields.io/badge/Python-3.8%2B-yellow) ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20MacOS-green) ![Docker](https://img.shields.io/badge/Container-Docker-blue)
 
-本仓库提供一个 **第三方、运维级、交互式** 的一键脚本 `decotv.sh` 和 **现代化图形界面管理工具**，  
-用于在 VPS / 云服务器上 **稳定部署并长期维护 DecoTV（Docker 版）**。
-
-> **运行方式说明（重要）**  
-> 本项目采用 **"下载脚本 → 本地执行"** 的方式运行，  
-> **不使用** `bash <(curl ...)` 的进程替换形式，  
-> 以避免 Shell 缓存、路径不稳定等历史问题。
+> **"技术的本质是让人自由，而不是设限。他行，你也行。"** 🚀
+> 
+> *Technology should empower, not restrict. If they can do it, so can you.*
 
 ---
 
-## 项目关系说明（重要）
+## 📖 目录 (Table of Contents)
 
-本仓库 **不是 DecoTV 官方仓库**，而是一个 **独立的部署与运维工具**。
-
-### DecoTV（原项目）
-- 作者：Decohererk  
-- 仓库：https://github.com/Decohererk/DecoTV  
-- 职责：功能设计、前端与业务逻辑
-
-### bytv（本仓库）
-- 第三方部署与运维脚本
-- 仅使用官方 Docker 镜像
-- 不 Fork、不修改、不替代原项目
-- 仅负责部署与运维自动化
+1. [项目哲学与价值观](#-项目哲学与价值观-philosophy)
+2. [这是什么？](#-这是什么-introduction)
+3. [懒人极速上手](#-懒人极速上手-quick-start)
+4. [核心功能与优势](#-核心功能与优势-features)
+5. [技术原理深度解析 (硬核篇)](#-技术原理深度解析-technical-deep-dive)
+6. [文件结构与 AI 蓝图](#-文件结构与-ai-蓝图-structure)
+7. [未来展望与扩展](#-未来展望与扩展-roadmap)
+8. [许可证](#-许可证-license)
 
 ---
 
-## 快速开始（推荐方式）
+## 💡 项目哲学与价值观 (Philosophy)
 
-### 方式一：图形界面管理工具（推荐）
+在这个项目里，我们不仅仅是在写代码，更是在传递一种信念：
 
-#### 1️⃣ 启动图形界面
+*   **打破黑盒 (Open Box)**: 拒绝 "盲盒式" 运行。每一个功能、每一个按钮背后的逻辑都是透明的。我们希望你在使用工具的同时，也能理解工具。
+*   **掌控力 (Control)**: 无论是 VPS 还是家用服务器，数据的所有权和控制权应完全归属于你。
+*   **极客精神 (Geek Spirit)**: 鼓励折腾，鼓励动手。看到复杂的代码不要怕，拆解它，理解它，重构它。
+*   **快乐编程 (Joy)**: 编程不应是枯燥的。当你看到那个精美的 GUI 界面弹出的那一刻，那种多巴胺的释放，才是我们追求的极致体验。😎
 
+---
+
+## 🧐 这是什么？ (Introduction)
+
+**DecoTV Manager** 是一个专为 DecoTV（Docker 版）打造的 **企业级运维管理系统**。
+
+它不仅仅是一个启动脚本，而是一个拥有 **现代化图形界面 (GUI)**、**工业级加密存储**、**实时资源监控** 和 **自动化运维能力** 的综合管理平台。
+
+### 🎯 适用场景
+*   **云服务器 (VPS)**: 批量管理多台服务器上的媒体服务。
+*   **家庭实验室 (HomeLab)**: 极客们的本地部署首选。
+*   **团队协作**: 需要安全分发配置但不泄露明文密码的场景。
+
+### ⚖️ 优缺点分析
+| 优点 (Pros) ✅ | 缺点 (Cons) ❌ |
+| :--- | :--- |
+| **颜值即正义**: PyQt6 打造的现代化深色模式 UI，赏心悦目。 | **环境依赖**: 需要安装 Python 和相关库（适合有一定基础的用户）。 |
+| **数据安全**: AES-256 加密存储所有敏感信息，丢了配置文件也不怕。 | **GUI 限制**: 需要图形界面环境（Windows/Mac 或 Linux 桌面版）。 |
+| **全能监控**: CPU、内存、网络 IO、Docker 状态一目了然。 | |
+| **多开神器**: 同时管理 N 个实例，一键批量启停。 | |
+
+---
+
+## ⚡ 懒人极速上手 (Lazy Start)
+
+### 🟢 Windows 用户 (最简单)
+1.  **环境准备**: 安装 [Python 3.8+](https://www.python.org/downloads/) 和 [Docker Desktop](https://www.docker.com/products/docker-desktop)。
+2.  **下载项目**: 点击右上角 `Code` -> `Download ZIP` 解压。
+3.  **安装依赖**: 双击文件夹内的 `必须先看.txt` (或者在终端运行 `pip install -r requirements.txt`)。
+4.  **一键启动**: 双击 `启动DecoTV管理工具.bat`。
+
+🎉 **Boom!** 你的可视化管理后台已启动。
+
+### 🐧 Linux / MacOS 用户
 ```bash
-# Windows 用户直接双击运行
-启动DecoTV管理工具.bat
+# 1. 克隆仓库
+git clone https://github.com/lza6/bytv-optimization.git
+cd bytv-optimization
 
-# Linux/Mac 用户
+# 2. 安装依赖
+pip3 install -r requirements.txt
+
+# 3. 运行
 python3 decotv_gui.py
 ```
 
-#### 2️⃣ 功能特性（V5 增强版）
+---
 
-- 🎨 **现代化UI设计**：全新设计的用户界面，支持深色模式
-- 🚀 **多实例管理**：同时管理多个DecoTV实例
-- ⚡ **批量操作**：支持批量启动、停止实例
-- 🔒 **安全加密**：密码加密存储，保护敏感信息
-- 💾 **备份恢复**：完整的实例配置备份与恢复
-- 🔄 **自动更新**：内置软件更新检查
-- 📊 **实时监控**：Docker状态实时监控
-- 🛠️ **系统托盘**：后台运行，随时访问
-- 📝 **日志监控**：实时日志查看与过滤
-- 📈 **性能监控**：系统资源使用情况监控
-- 🔌 **插件架构**：支持功能扩展和定制
-- 📁 **增量备份**：只备份变化的内容
-- ⏰ **定时备份**：自动定时备份功能
-- 📋 **日志分析**：智能日志分析和过滤
-- 🔍 **错误检测**：自动错误检测和报告
+## ✨ 核心功能与优势 (Features)
+
+*   🎨 **现代化 UI 设计**: 支持 **深色模式 (Dark Mode)**，磨砂质感，丝滑动画。
+*   🔐 **工业级安全**: 内置 **AES-256-CBC** 加密算法。你的密码在本地也是加密存储的！
+*   📊 **Dashboard 仪表盘**: 自绘图表组件，实时显示 CPU/内存 曲线，不仅好用，更是好看。
+*   🐳 **Docker 深度集成**: 自动检测 Docker 守护进程，像原生应用一样管理容器。
+*   ⚡ **异步高性能**: 耗时操作全部 **多线程 (QThread)** 处理，界面永不卡顿。
+*   🩹 **自动备份与恢复**: 定时增量备份配置，手残党的后悔药。
 
 ---
 
-### 方式二：传统命令行脚本
+## 🔬 技术原理深度解析 (Technical Deep Dive)
 
-#### 1️⃣ 下载脚本
+> 🤓 **给开发者的硬核指南** - 这里是通过代码看本质的地方。
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/li210724/bytv/main/decotv.sh -o decotv.sh
-```
+本项目完全基于 **Python 3** + **PyQt6** 开发，核心文件 `decotv_gui.py` 包含以下关键技术点：
 
-#### 2️⃣ 赋予执行权限
+### 1. 架构设计 (Architecture)
+采用 **MVC (Model-View-Controller)** 的变种模式：
+*   **View (UI)**: `QMainWindow`, `QWidget` 等 PyQt 组件负责展示。
+*   **Logic (Controller)**: `DecoTVManager` 类统筹业务逻辑。
+*   **Worker**: `WorkerThread`, `LogMonitorThread` 负责后台耗时任务。
 
-```bash
-chmod +x decotv.sh
-```
+### 2. 关键组件解析
 
-#### 3️⃣ 运行脚本
+#### 🔒 加密模块 (`EncryptionUtil`)
+*   **技术点**: 使用 `cryptography` 库。
+*   **算法**: `PBKDF2HMAC` (基于 HMAC-SHA256) 进行密钥派生 + `Fernet` (AES-CBC) 对称加密。
+*   **实现**: 系统启动时要求输入“主密码”，该密码不存储，仅在内存中用于解密配置文件。
+*   **代码位置**: 搜索 `class EncryptionUtil`。
 
-```bash
-sudo ./decotv.sh
-```
+#### 📈 资源监控 (`ResourceMonitor`)
+*   **技术点**: `psutil` 库 + Docker CLI。
+*   **魔法**: 使用了装饰器模式 `@performance_monitor` 和 `@async_cache`。
+    *   `@async_cache(ttl=60)`: 给耗时的数据获取加上缓存，避免频繁调用 Docker API 导致 CPU 飙升。
+*   **代码位置**: 搜索 `class ResourceMonitor`。
 
-运行后进入 **中文交互式管理面板**，  
-可完成部署、查看状态、日志与卸载。
+#### 🧵 多线程模型 (Threading)
+*   **问题**: 直接在 GUI 线程运行 `subprocess.run` 会导致界面“假死”。
+*   **解决**: 
+    *   `WorkerThread(QThread)`: 处理 Docker pull/start/stop 等命令。
+    *   `LogMonitorThread(QThread)`: 使用 `subprocess.Popen` 读取 `stdout` 流，实时吐出日志到 UI。
 
-> 以后需要管理时，**再次执行当前目录下的 `decotv.sh` 即可**。
+#### 📊 自绘组件 (Custom Widgets)
+*   **亮点**: `ModernChartWidget` 类。
+*   **原理**: 重写 `paintEvent` 方法，使用 `QPainter` 手绘坐标轴、网格线和数据折线，实现比原生控件更美观的图表。
 
----
-
-## V5 增强版新增功能
-
-### 🎨 现代化图形界面
-- **深色模式**：支持浅色/深色主题切换
-- **响应式设计**：适配不同屏幕尺寸
-- **直观操作**：拖拽、快捷键支持
-- **现代化组件**：图表、卡片、动画效果
-
-### 🚀 多实例管理
-- **批量操作**：一次选择多个实例进行操作
-- **实例克隆**：快速复制现有实例配置
-- **状态监控**：实时显示各实例运行状态
-
-### 🔐 安全增强
-- **密码加密**：使用工业级加密算法保护密码
-- **访问控制**：主密码保护敏感操作
-- **审计日志**：记录所有管理操作
-- **安全密码生成器**：生成高强度安全密码
-
-### 💾 数据管理
-- **一键备份**：完整备份所有实例配置
-- **快速恢复**：从备份文件快速恢复
-- **版本控制**：配置文件版本管理
-- **定时备份**：自动定时备份功能
-- **增量备份**：只备份变化的内容
-
-### 📊 监控与诊断
-- **实时监控**：Docker资源使用情况
-- **性能指标**：CPU、内存、网络监控
-- **异常检测**：自动检测和报告问题
-- **系统监控面板**：可视化资源使用图表
-
-### 📝 日志管理
-- **日志过滤**：按级别、关键词过滤日志
-- **日志分析**：智能分析错误和警告
-- **日志导出**：导出日志文件
-- **搜索功能**：快速定位日志内容
-
-### 🔌 插件架构
-- **模块化设计**：支持功能扩展
-- **插件系统**：可扩展的插件架构
-- **钩子机制**：灵活的事件处理系统
-- **热插拔**：动态加载和卸载插件
-
-### 🔄 自动更新
-- **版本检查**：自动检查新版本
-- **智能更新**：后台下载更新
-- **更新通知**：及时通知可用更新
-- **安全更新**：安全的更新机制
-
----
-
-## 当前脚本支持的功能
-
-以下内容 **与当前脚本实际能力完全一致**：
-
-- Docker / Docker Compose 自动检测与安装
-- 官方镜像部署：
-  - `ghcr.io/decohererk/decotv`
-  - `apache/kvrocks`
-- Kvrocks 数据持久化
-- **端口手动选择**（默认 3000）
-- 中文交互式菜单（适合手机 SSH）
-- 运维功能：
-  - 部署 / 重装
-  - 状态查看
-  - 日志查看（core / kvrocks）
-  - 彻底卸载（容器 / 数据 / 工作目录）
-
----
-
-## 访问方式说明
-
-部署完成后，脚本会 **当场输出并明确提示**：
-
-- 访问地址（IP + 实际端口）
-- 用户名
-- 密码
-- 使用端口
-
-示例：
-
-```
-http://服务器IP:3000
-```
-
-> 面板首页不会重复显示账号信息，  
-> 请在部署完成时妥善保存凭据。
-
----
-
-# 反向代理完整教程（重点）
-
-> **本脚本不会、也不应该自动配置反向代理或 HTTPS。**  
-> 反向代理属于服务器级基础设施，应由用户自行管理。
-
-下面给出一个 **从 0 到可用** 的完整反向代理教程，适合绝大多数使用场景。
-
----
-
-## 一、什么时候需要反向代理？
-
-你在以下情况 **应该使用反向代理**：
-
-- 希望使用 **域名** 而不是 `IP:端口` 访问
-- 希望使用 **HTTPS**
-- 服务器上已有多个 Web 服务，需要统一入口
-- 想隐藏 DecoTV 实际监听端口
-
-如果你只是自用测试：  
-**直接使用 `http://IP:端口` 即可，无需反代。**
-
----
-
-## 二、反向代理的基本原理
-
-```
-用户浏览器
-     │
-     ▼
-https://tv.example.com   （80 / 443）
-     │
-     ▼
-Nginx / Caddy / 面板反代
-     │
-     ▼
-127.0.0.1:3000           （DecoTV 实际端口）
-```
-
-DecoTV **只监听本机端口**，  
-所有公网访问由反向代理接管。
-
----
-
-## 三、使用 Nginx 进行反向代理（详细步骤）
-
-### 1. 前置条件
-
-- 已安装 Nginx
-- 域名已解析到服务器公网 IP
-- 防火墙 / 安全组已放行 80（和 443）端口
-
----
-
-### 2. 新建站点配置文件
-
-假设：
-- 域名：`tv.example.com`
-- DecoTV 端口：`3000`
-
-创建配置文件：
-
-```bash
-nano /etc/nginx/conf.d/decotv.conf
-```
-
-写入内容：
-
-```nginx
-server {
-    listen 80;
-    server_name tv.example.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:3000;
-        proxy_http_version 1.1;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
+### 3. 代码亮点 (Code Highlights)
+```python
+# 装饰器示例：为耗时函数增加缓存
+def async_cache(ttl=60):
+    def decorator(func):
+        cache = {}
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # ... 缓存逻辑 ...
+            return result
+        return wrapper
+    return decorator
 ```
 
 ---
 
-### 3. 检查并重载 Nginx
+## 📂 文件结构与 AI 蓝图 (Structure)
 
-```bash
-nginx -t
-nginx -s reload
+如果你是 AI 爬虫或者想要通过 AI 二次开发，请参考此结构：
+
+```text
+bytv-optimization/
+├── decotv_gui.py          # [核心] 主程序源代码 (1000+行)
+├── requirements.txt       # Python 依赖清单
+├── 启动DecoTV管理工具.bat  # Windows 一键启动脚本
+├── README.md              # 说明文档 (本文)
+└── (自动生成)
+    ├── config/            # 配置文件存储目录
+    └── backups/           # 备份文件目录
 ```
 
-访问：
-
-```
-http://tv.example.com
-```
-
-如能正常访问，说明反向代理已生效。
+### 🤖 AI 复刻/升级路径
+如果你想让 AI 帮你升级这个项目，可以尝试以下 Prompt 思路：
+1.  **UI 升级**: "读取 `decotv_gui.py` 中的 `ThemeManager` 类，帮我增加一套 'Cyberpunk 2077' 配色方案。"
+2.  **功能扩展**: "基于 `WorkerThread` 类，通过 `ssh` 库实现远程服务器管理功能。"
+3.  **Web化**: "分析 `ResourceMonitor` 的逻辑，用 Flask 重写一个 API 接口。"
 
 ---
 
-## 四、HTTPS 配置建议
+## 🔮 未来展望与扩展 (Roadmap)
 
-### 方案一：Nginx + Certbot
+我们深知项目目前还不完美，以下是我们的 **星辰大海**：
 
-```bash
-apt install -y certbot python3-certbot-nginx
-certbot --nginx -d tv.example.com
-```
-
-### 方案二：Caddy（更简单）
-
-```caddy
-tv.example.com {
-    reverse_proxy 127.0.0.1:3000
-}
-```
+*   [ ] **Web 界面版**: 摆脱 PyQt 依赖，实现浏览器远程管理 (React + FastAPI)。
+*   [ ] **插件系统**: 允许开发者编写 Python 脚本插件动态加载。
+*   [ ] **集群模式**: 一个主控端管理 N 台 VPS 上的节点。
+*   [ ] **一键 HTTPS**: 集成 Caddy/Nginx 反代配置向导。
 
 ---
 
-## 五、安全建议（强烈推荐）
+## 🤝 贡献与反馈
 
-当反向代理工作正常后：
+不管你是大神还是小白，如果你发现了 Bug，或者有更 cool 的想法，欢迎 **Issue** 或 **Pull Request**！另外，如果这个项目帮到了你，请不要吝啬你的 **Star** ⭐，这对我真的很重要！
 
-- **关闭 DecoTV 端口的公网访问**
-- 仅允许 `127.0.0.1` 或内网访问
-- 所有外部流量只通过 80 / 443
+让我们一起，用代码改变世界，哪怕只有一点点。🌍
 
 ---
 
-## 常见问题（FAQ）
+## 📜 许可证 (License)
 
-### Q1：会影响我服务器上已有站点吗？
-不会。  
-每个域名对应独立的反代配置，互不干扰。
+本项目采用 **[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)** 开源协议。
 
-### Q2：可以用宝塔 / 1Panel / 群晖反代吗？
-可以。  
-本质都是将域名转发到：
+这意味着你可以：
+*   ✅ **商业使用**
+*   ✅ **修改代码**
+*   ✅ **分发副本**
 
-```
-127.0.0.1:DecoTV端口
-```
-
-### Q3：为什么不内置反代或 HTTPS？
-这是明确的设计边界，  
-避免脚本越权操作系统级服务。
+前提是：**你需要保留原作者的版权声明和许可证声明**。
 
 ---
 
-## 卸载说明
-
-在脚本菜单中选择 **卸载**：
-
-- 删除 DecoTV 相关容器
-- 删除 Kvrocks 数据卷
-- 删除项目工作目录（`/opt/decotv`）
-
-卸载后系统恢复为未安装状态。
-
----
-
-## 免责声明
-
-本项目为 **第三方部署与运维工具**，  
-不对 DecoTV 原项目功能负责。
-
-请遵守当地法律法规，合理合法使用。
+*Made with ❤️ by [LZA6](https://github.com/lza6)*
